@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/css/output.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="static flex flex-col justify-center w-screen h-screen">
+        <!-- Login  -->
+        <div class="self-center flex flex-col border border-gray-400 p-5 min-w-fit  w-96" id="mainPanalLogin">
+            <p class="self-center">Login</p>
+            <div class="self-center border border-gray-400 py-4 w-2/3">
+                <label for="userInput">User</label><br>
+                <input class="border border-gray-400 w-full" type="text" id="userInput">
+            </div>
+            <div class="self-center border border-gray-400 py-4 w-2/3">
+                <label for="passwordInput">Password</label><br>
+                <input class="border border-gray-400 w-full" type="text" id="passwordInput">
+            </div>
+            <div class="flex flex-row justify-center text-center border border-gray-400 py-4">
+                <button class="border border-gray-400 mr-3 w-20" onclick="loginButton()">Login</button>
+                <button class="border border-gray-400 mr-3 w-20" onclick="toggleVisibilityRegister()">Register</button>
+            </div>
+            <p class="self-center">Or</p>
+            <div class="flex flex-row justify-center text-center border border-gray-400 py-4">
+                <button class="border border-gray-400 mr-3 w-20">Google</button>
+            </div>
+        </div>
+        <!-- Register  -->
+        <div class="absolute self-center flex flex-col border border-gray-400 p-5 min-w-fit w-96 bg-white hidden"
+id="panalRegister">
+            <p class="self-center mb-10">Register</p>
+            <div class="self-center border border-gray-400 py-4 w-2/3">
+                <label for="fnameInputRe">First name</label><br>
+                <input class="border border-gray-400 w-full" type="text" id="fnameInputRe">
+            </div>
+            <div class="self-center border border-gray-400 py-4 w-2/3">
+                <label for="lnameInputRe">Last name</label><br>
+                <input class="border border-gray-400 w-full" type="text" id="lnameInputRe">
+            </div>
+            <div class="self-center border border-gray-400 py-4 w-2/3">
+                <label for="passwordInputRe">Password</label><br>
+                <input class="border border-gray-400 w-full" type="text" id="passwordInputRe">
+            </div>
+            <div class="self-center border border-gray-400 py-4 w-2/3 mb-10">
+                <label for="passwordInputRe">Email</label><br>
+                <input class="border border-gray-400 w-full" type="email" id="emailInputRe">
+            </div>
+            <div class="flex flex-row justify-center text-center border border-gray-400 py-4">
+                <button class="border border-gray-400 mr-3 w-20 bg-slate-200"
+                    onclick="registerButton()">Register</button>
+            </div>
+            <div class="absolute top-0 right-0">
+                <button class="border border-gray-400 rounded-full w-6 h-6"
+                    onclick="toggleVisibilityRegister()">X</button>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <div class="border border-gray-400 p-4">
+        <button class="border border-gray-400 mr-3" id="hidShow" onclick="toggleVisibility()">Hid</button>
+    </div>
+
+</body>
+
+<script src="/javascript/register.js"></script>
+<script src="/javascript/login.js"></script>
+<script>
+    function toggleVisibility() {
+        const mainLoginDiv = document.getElementById("mainPanalLogin");
+        const toggleButton = document.getElementById("hidShow");
+        mainLoginDiv.classList.toggle("hidden");
+        toggleButton.innerHTML = (toggleButton.innerHTML === 'Hid') ? 'Show' : 'Hid';
+    }
+
+    function toggleVisibilityRegister() {
+        const mainLoginDiv = document.getElementById("panalRegister");
+        mainLoginDiv.classList.toggle("hidden");
+    }
+
+    async function registerButton() {
+        const fname = document.getElementById('fnameInputRe').value;
+        const lname = document.getElementById('lnameInputRe').value;
+        const password = document.getElementById('passwordInputRe').value;
+        const email = document.getElementById('emailInputRe').value;
+
+        const data = {
+            fname: fname,
+            lname: lname,
+            email: email,
+            password: password
+        };
+
+        console.log(data);
+
+        const registerSuccessfully = await register(data);
+        if (registerSuccessfully) {
+            toggleVisibilityRegister();
+        }
+        //Router 
+        //location.href = "/";
+    }
+
+    async function loginButton() {
+        await login();
+    }
+
+    function test() {
+        console.log(55);
+    }
+</script>
+
+</html>

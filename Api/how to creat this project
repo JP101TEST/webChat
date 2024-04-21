@@ -1,0 +1,15 @@
+* Tip
+Use "npm start" for run server.
+
+* Step 1: Setup node.js and express.js.
+    - Setup node.js use "npm init".
+    - Install express.js use "npm install express".
+    - (If you want to use automatic restarts server when changing code in project).
+        - Setup nodemon use "npm install nodemon --save-dev".
+            ("--save-dev" is use for this modules is use project in dev part only not project succeed).
+        - Put this script "start": "nodemon index.js" in package.json.
+            (Now it can use "npm start" for start server).
+
+* Step 2: Connect to the database
+    - Install plugin for use sql "npm install mysql2"
+    

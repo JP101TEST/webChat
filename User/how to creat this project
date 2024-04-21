@@ -1,0 +1,34 @@
+* Tip
+Use "npm start" for run server.
+Add new terminal and use "npm run dev" for run tailwindcss output.
+
+* Step 1: Setup node.js and express.js.
+    - Setup node.js use "npm init".
+    - Install express.js use "npm install express".
+    - (If you want to use automatic restarts server when changing code in project).
+        - Setup nodemon use "npm install nodemon --save-dev".
+            ("--save-dev" is use for this modules is use project in dev part only not project succeed).
+        - Put this script "start": "nodemon index.js" in package.json.
+            (Now it can use "npm start" for start server).
+* Step 2: Tailwind.
+    - Install tailwind use "npm install -D tailwindcss"
+    - Setup use "npx tailwindcss init"
+    - Open tailwind.config.js 
+        - Add the paths to all of your template files in your 
+        - 'content: ["./public/view/*.{html,js}"]'
+    - Add the Tailwind directives to your CSS
+        - Create input.css and put this code
+            "
+            @tailwind base;
+            @tailwind components;
+            @tailwind utilities;
+            "
+    - Start the Tailwind CLI build process
+        - use "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch"
+            (-i is input.css file location ,-o is output.css file location)
+    - Use in html
+        /css/output.css can't use ./css/output.css
+
+* Step 3: date 19-04-2027
+    - Create view login simple
+    - Create view register simple
