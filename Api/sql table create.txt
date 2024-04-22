@@ -1,0 +1,8 @@
+# Table user
+CREATE TABLE Users (
+  id INT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(255) NOT NULL UNIQUE,  -- Enforce unique username
+  email VARCHAR(255) NOT NULL UNIQUE,  -- Enforce unique emails
+  password VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id)  -- Use the id column for Primary Key
+) ENGINE=InnoDB;

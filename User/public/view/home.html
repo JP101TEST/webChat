@@ -1,3 +1,10 @@
+<script>
+    const session = sessionStorage.getItem("login");
+    console.log(session);
+    if (!session) {
+       location.href = "/login";
+    }
+</script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +19,15 @@
     <h1 class="bg-green-800 text-3xl font-bold underline">
         Home.
     </h1>
-    <a href="/home">index</a>
+    <a href="/testChangePage">index</a><br>
+
+    <button onclick="logOutButton()">Logout</button><br>
 </body>
+<script>
+    function logOutButton() {
+        sessionStorage.clear()
+        location.href = "/login";
+    }
+</script>
 
 </html>

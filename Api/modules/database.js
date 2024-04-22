@@ -9,19 +9,6 @@ const pool = mysql.createPool({
     port: 3306
 });
 
-// No need for connection.connect()
-
-// // Testing the connection
-// (async () => {
-//     try {
-//         const connection = await pool.getConnection();
-//         console.log("Database Connected!");
-//         connection.release(); // Release the connection back to the pool
-//     } catch (error) {
-//         console.error("Database Connection Error:", error);
-//     }
-// })();
-
 // Function to attempt database connection
 async function connectToDatabase() {
     try {

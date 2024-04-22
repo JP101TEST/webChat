@@ -1,3 +1,11 @@
+<script>
+    const session = sessionStorage.getItem("login");
+    console.log(session);
+    if (session) {
+        location.href = "/";
+    }
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,13 +22,14 @@
         <!-- Login  -->
         <div class="self-center flex flex-col border border-gray-400 p-5 min-w-fit  w-96" id="mainPanalLogin">
             <p class="self-center">Login</p>
+            <p class="self-center text-red-600 hidden" id="loginError">Username or password is not correct.</p>
             <div class="self-center border border-gray-400 py-4 w-2/3">
-                <label for="userInput">User</label><br>
-                <input class="border border-gray-400 w-full" type="text" id="userInput">
+                <label for="usernameInput">User name</label><br>
+                <input class="border border-gray-400 w-full" type="text" id="usernameInput">
             </div>
             <div class="self-center border border-gray-400 py-4 w-2/3">
                 <label for="passwordInput">Password</label><br>
-                <input class="border border-gray-400 w-full" type="text" id="passwordInput">
+                <input class="border border-gray-400 w-full" type="password" id="passwordInput">
             </div>
             <div class="flex flex-row justify-center text-center border border-gray-400 py-4">
                 <button class="border border-gray-400 mr-3 w-20" onclick="loginButton()">Login</button>
@@ -33,22 +42,21 @@
         </div>
         <!-- Register  -->
         <div class="absolute self-center flex flex-col border border-gray-400 p-5 min-w-fit w-96 bg-white hidden"
-id="panalRegister">
+            id="panalRegister">
             <p class="self-center mb-10">Register</p>
             <div class="self-center border border-gray-400 py-4 w-2/3">
-                <label for="fnameInputRe">First name</label><br>
-                <input class="border border-gray-400 w-full" type="text" id="fnameInputRe">
-            </div>
-            <div class="self-center border border-gray-400 py-4 w-2/3">
-                <label for="lnameInputRe">Last name</label><br>
-                <input class="border border-gray-400 w-full" type="text" id="lnameInputRe">
+                <label for="usernameInputRe">User name</label><br>
+                <p class="text-red-600" id="usernameInputReError">User name</p>
+                <input class="border border-gray-400 w-full" type="text" id="usernameInputRe">
             </div>
             <div class="self-center border border-gray-400 py-4 w-2/3">
                 <label for="passwordInputRe">Password</label><br>
-                <input class="border border-gray-400 w-full" type="text" id="passwordInputRe">
+                <p class="text-red-600" id="passwordInputReError">User name</p>
+                <input class="border border-gray-400 w-full" type="password" id="passwordInputRe">
             </div>
             <div class="self-center border border-gray-400 py-4 w-2/3 mb-10">
-                <label for="passwordInputRe">Email</label><br>
+                <label for="emailInputRe">Email</label><br>
+                <p class="text-red-600" id="emailInputReError">User name</p>
                 <input class="border border-gray-400 w-full" type="email" id="emailInputRe">
             </div>
             <div class="flex flex-row justify-center text-center border border-gray-400 py-4">
@@ -61,7 +69,21 @@ id="panalRegister">
             </div>
         </div>
 
+        <div class="absolute self-center flex flex-col border p-5 min-w-fit w-96 bg-white h-60 hidden"
+            id="panalSuccessfully">
+            <div class="h-full w-full flex justify-center">
+                <p class="self-center text-green-500 text-3xl">Successfully</p>
+            </div>
+            <div class="absolute top-0 right-0">
+                <button class="border border-gray-400 rounded-full w-6 h-6"
+                    onclick="toggleVisibilitySuccessfully()">X</button>
+            </div>
+        </div>
     </div>
+
+
+
+
     <br>
     <div class="border border-gray-400 p-4">
         <button class="border border-gray-400 mr-3" id="hidShow" onclick="toggleVisibility()">Hid</button>
@@ -69,8 +91,6 @@ id="panalRegister">
 
 </body>
 
-<script src="/javascript/register.js"></script>
-<script src="/javascript/login.js"></script>
 <script>
     function toggleVisibility() {
         const mainLoginDiv = document.getElementById("mainPanalLogin");
@@ -80,35 +100,120 @@ id="panalRegister">
     }
 
     function toggleVisibilityRegister() {
-        const mainLoginDiv = document.getElementById("panalRegister");
-        mainLoginDiv.classList.toggle("hidden");
+        const registerPanal = document.getElementById("panalRegister");
+        const username = document.getElementById('usernameInputRe');
+        const password = document.getElementById('passwordInputRe');
+        const email = document.getElementById('emailInputRe');
+        username.value = '';
+        password.value = '';
+        email.value = '';
+        registerPanal.classList.toggle("hidden");
+        hiddenAllRegisterErrorDisplay();
+    }
+
+    function toggleVisibilitySuccessfully() {
+        const successfullyPanal = document.getElementById("panalSuccessfully");
+        successfullyPanal.classList.toggle("hidden");
+    }
+
+    async function loginButton() {
+        const username = document.getElementById('usernameInput').value;
+        const password = document.getElementById('passwordInput').value;
+        const loginError = document.getElementById('loginError');
+
+        const data = {
+            username: username,
+            password: password
+        };
+
+        try {
+            const response = await fetch('http://localhost:8000/loginRegister/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            console.log(result);
+            if (result.success) {
+                loginError.classList.add('hidden')
+                sessionStorage.setItem("login", true);
+                location.href = "/";
+            } else {
+                loginError.innerText = result.messageError;
+                loginError.classList.remove('hidden')
+            }
+        } catch (error) {
+            console.log('Connection failed:', error.message);
+        }
     }
 
     async function registerButton() {
-        const fname = document.getElementById('fnameInputRe').value;
-        const lname = document.getElementById('lnameInputRe').value;
-        const password = document.getElementById('passwordInputRe').value;
-        const email = document.getElementById('emailInputRe').value;
+        const username = document.getElementById('usernameInputRe');
+        const password = document.getElementById('passwordInputRe');
+        const email = document.getElementById('emailInputRe');
+        hiddenAllRegisterErrorDisplay();
 
         const data = {
-            fname: fname,
-            lname: lname,
-            email: email,
-            password: password
+            username: username.value,
+            password: password.value,
+            email: email.value
         };
 
         console.log(data);
 
-        const registerSuccessfully = await register(data);
-        if (registerSuccessfully) {
-            toggleVisibilityRegister();
+        try {
+            const response = await fetch('http://localhost:8000/loginRegister/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            console.log(result);
+            registerErrorDisplay(result);
+            if (result.success) {
+                toggleVisibilityRegister();
+                toggleVisibilitySuccessfully();
+            } else {
+
+            }
+        } catch (error) {
+            console.log('Connection failed:', error.message);
         }
-        //Router 
-        //location.href = "/";
     }
 
-    async function loginButton() {
-        await login();
+    function registerErrorDisplay(result) {
+        const usernameError = document.getElementById('usernameInputReError');
+        const passwordError = document.getElementById('passwordInputReError');
+        const emailError = document.getElementById('emailInputReError');
+        if (result.messageUsernameError) {
+            usernameError.innerText = result.messageUsernameError;
+            usernameError.classList.toggle("hidden");
+
+        }
+        if (result.messagePasswordError) {
+            passwordError.innerText = result.messagePasswordError;
+            passwordError.classList.toggle("hidden");
+
+        }
+        if (result.messageEmailError) {
+            emailError.innerText = result.messageEmailError;
+            emailError.classList.toggle("hidden");
+
+        }
+    }
+
+    function hiddenAllRegisterErrorDisplay() {
+        const usernameError = document.getElementById('usernameInputReError');
+        const passwordError = document.getElementById('passwordInputReError');
+        const emailError = document.getElementById('emailInputReError');
+        usernameError.classList.add("hidden");
+        passwordError.classList.add("hidden");
+        emailError.classList.add("hidden");
     }
 
     function test() {
