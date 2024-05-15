@@ -12,8 +12,13 @@ router.get('/login', (req, res) => {
     res.sendFile(filePath);
 });
 
-router.get('/testChangePage', (req, res) => {
-    const filePath = path.join(__dirname, '../../public/view', 'testChangePage.html');
+router.get('/profile', (req, res) => {
+    const filePath = path.join(__dirname, '../../public/view', 'profile.html');
+    res.sendFile(filePath);
+});
+
+router.get('/addFriend', (req, res) => {
+    const filePath = path.join(__dirname, '../../public/view', 'addFriend.html');
     res.sendFile(filePath);
 });
 

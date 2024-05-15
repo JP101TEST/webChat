@@ -1,8 +1,8 @@
 <script>
     const session = sessionStorage.getItem("login");
-    console.log(session);
+    //console.log(session);
     if (!session) {
-       location.href = "/login";
+        location.href = "/login";
     }
 </script>
 <!DOCTYPE html>
@@ -12,22 +12,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="/css/output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/chat.css">
+
 </head>
 
 <body>
-    <h1 class="bg-green-800 text-3xl font-bold underline">
+    <!-- <h1 class="bg-green-800 text-3xl font-bold underline">
         Home.
     </h1>
-    <a href="/testChangePage">index</a><br>
-
+    <h3 ></h3>
+    <a href="/testChangePage">testChangePage</a><br>
     <button onclick="logOutButton()">Logout</button><br>
+    <script>
+        //console.log("username :", sessionStorage.getItem("username").replace(/^firebaseAuth@/, ''));
+        // Check if "googleLogin" is set in sessionStorage
+
+    </script> -->
+
+    <div id="topBar">
+        <div id="topBarLogo">
+            <p onclick="backHome()" style="cursor: pointer;">Chat.</p>
+        </div>
+        <div id="topBarDropdown">
+            <img src="" alt="Flowers in Chania" id="imageUserTop" style="background-color: white;">
+            <div id="topBarDropdownMenu">
+                <div><img src="" alt="Flowers in Chania" id="image" style="background-color: white;">
+                    <p id="username"></p>
+                </div>
+                <a href="/profile"><img src="/image/user_1144760.png" alt="">Profile</a>
+                <a href="" onclick="logOutButton()"><img src="/image/logout_1828427.png" alt="">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div id="line"></div>
+    <div id="panal">
+        <div id="panalMenu">
+            <div id="panalMenuSearch">
+                <input type="text" id="inputUsername" placeholder="Search room." oninput="searchRooms()">
+                <!-- <button ><img src="/image/search_white.png" alt=""></button> -->
+            </div>
+            <div id="line"></div>
+            <div id="panalMenuFriend">
+                <!-- <a href="" id="panalMenuFriendChat"><img src="/image/bubble-chat.png" alt="" title="Chat">Chat</a> -->
+                <a href="/addFriend" id="panalMenuFriendAddFriend"><img src="/image/add-user_white.png" alt=""
+                        title="Add friend">Add
+                    friend</a>
+            </div>
+            <div id="line"></div>
+            <div id="panalMenuList">
+
+            </div>
+        </div>
+
+        <div id="panalDetail">
+            <div id="panalDetailEnabale">
+                <div class="panalDetailUser">
+                    <div class="panalDetailUserP">
+                        <div class="imagePerson">
+                            <img src="/image/user_1144760.png" alt="">
+                        </div>
+                        <div class="nameUser">
+                            <div>username</div>
+                            <div style="font-size: 16px;width: auto;">You have been blocked by this friend.</div>
+                        </div>
+                    </div>
+                    <div class="panalDetailUserB">
+                        <button>Block</button>
+                    </div>
+                </div>
+                <div id="panalDetailChat">
+                </div>
+                <div class="panalDetailMessage">
+                    <!-- <input type="text"> -->
+                    <textarea name="" id="myTextarea"></textarea>
+                    <button id="sendMessage"><img src="/image/paper-plane.png" alt=""></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/javascript/topmenu.js"></script>
+    <script src="/javascript/getUserSession.js"></script>
+    <script src="/javascript/getData.js"></script>
+    <script src="/javascript/chat.js"></script>
+    <script src="/javascript/globalFuntion.js"></script>
+    <script>
+
+        setUpDataInHomePage();
+
+        // function createSlotUsers(num) {
+        //     const friendSlots = document.getElementById("panalMenuList");
+        //     let list = ``;
+        //     for (let index = 0; index < num; index++) {
+        //         list += `
+        //             <div class="friendSlot">
+        //                 <div class="imagePerson">
+        //                     <img src="/image/user_1144760.png" alt="">
+        //                 </div>
+        //                 <div class="name">
+        //                     <p>Username ${index + 1}</p>
+        //                 </div>
+        //             </div>
+        //             `
+        //     }
+        //     friendSlots.innerHTML = list;
+        // }
+
+
+
+        // function creatMessage(num) {
+        //     const panalDetailChat = document.getElementById("panalDetailChat");
+        //     for (let index = 0; index < num; index++) {
+        //         const chatBox = document.createElement("div");
+        //         chatBox.classList.add("chatBox");
+        //         const chatBoxInsite = document.createElement("div")
+        //         chatBoxInsite.classList.add("chatBoxInsite");
+        //         const message = document.createElement("div")
+        //         message.classList.add("message");
+        //         panalDetailChat.appendChild(chatBox);
+        //         chatBox.appendChild(chatBoxInsite);
+        //         if (index % 2 === 0) {
+        //             const imagePerson = document.createElement("div")
+        //             imagePerson.classList.add("imagePerson");
+        //             imagePerson.innerHTML = `<img src="/image/user_1144760.png" alt="">`;
+        //             chatBoxInsite.appendChild(imagePerson);
+        //             chatBox.style.justifyContent = "start";
+
+        //         } else {
+        //             chatBox.style.justifyContent = "end";
+        //         }
+        //         chatBoxInsite.appendChild(message);
+        //         message.innerText = "Compared to display: block, the major difference is that display: inline-block does not                        add"
+
+
+        //     }
+        // }
+
+        function logOutButton() {
+            sessionStorage.clear()
+            location.href = "/login";
+        }
+        // createSlotUsers(25);
+        // creatMessage(15);
+
+        let login = sessionStorage.getItem("login");
+        let googleLogin = sessionStorage.getItem("googleLogin");
+        let userId = sessionStorage.getItem("userId")
+        let username = sessionStorage.getItem("username")
+        let email = sessionStorage.getItem("email")
+        let image = sessionStorage.getItem("image")
+        console.log("login :", login);
+        console.log("googleLogin :", googleLogin);
+        console.log("userId :", userId);
+        console.log("username :", username);
+        console.log("email :", email);
+        console.log("image :", image);
+
+        searchRooms();
+    </script>
 </body>
-<script>
-    function logOutButton() {
-        sessionStorage.clear()
-        location.href = "/login";
-    }
-</script>
 
 </html>

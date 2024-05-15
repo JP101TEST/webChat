@@ -1,0 +1,125 @@
+body {
+    margin: 0px;
+    background-color: #222831;
+    padding: 5px;
+    height: 99vh;
+    min-width: 700px;
+}
+
+#topBar {
+    /* background-color: brown; */
+    height: 50px;
+    display: flex;
+    padding: 5px 10px;
+    justify-content: space-between;
+}
+
+
+#topBarLogo {
+    /* background-color: blue; */
+    color: white;
+    height: 100%;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    font-size: 45px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#topBarDropdown {
+    /* background-color: rgb(150, 112, 81); */
+    overflow: hidden;
+    height: 100%;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        /* background-color: aquamarine; */
+        width: 50px;
+        height: 90%;
+        border-radius: 50%;
+    }
+
+    img:hover {
+        border-style: solid;
+        border-color: #00ADB5;
+        cursor: pointer;
+    }
+
+    #topBarDropdownMenu {
+        display: none;
+        position: absolute;
+        background-color: #222831;
+        top: 65px;
+        right: 30px;
+        width: 250px;
+        padding: 5px;
+        border-radius: 5px;
+
+        a {
+            height: 40px;
+            margin: 20px 15px;
+            display: flex;
+            color: white;
+            font-family: "Roboto", sans-serif;
+            justify-content: start;
+            align-items: center;
+            /* Remove tag a style*/
+            text-decoration: none;
+
+            img {
+                height: 40px;
+                width: 40px;
+                margin-right: 10px;
+                border-radius: 0%;
+                filter: brightness(0) invert(1);
+            }
+
+            img:hover {
+                border-style: none;
+            }
+
+        }
+
+        a:hover {
+            background-color: #393E46;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        div {
+            margin: 20px 15px;
+            border-radius: 0%;
+            display: flex;
+            color: white;
+            font-family: "Roboto", sans-serif;
+            justify-content: start;
+            align-items: center;
+
+            img {
+                margin-right: 10px;
+                height: 40px;
+                width: 40px;
+            }
+
+            img:hover {
+                border-style: none;
+                cursor: default;
+            }
+        }
+    }
+}
+
+#line {
+    height: 5px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #393E46;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+

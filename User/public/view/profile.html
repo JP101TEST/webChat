@@ -1,0 +1,143 @@
+<script>
+    const session = sessionStorage.getItem("login");
+    //console.log(session);
+    if (!session) {
+        location.href = "/login";
+    }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+
+<body>
+    <div id="topBar">
+        <div id="topBarLogo">
+            <p onclick="backHome()" style="cursor: pointer;">Chat.</p>
+        </div>
+        <div id="topBarDropdown">
+            <img src="" alt="Flowers in Chania" id="imageUserTop" style="background-color: white;">
+            <div id="topBarDropdownMenu">
+                <div><img src="" alt="Flowers in Chania" id="image" style="background-color: white;">
+                    <p id="username"></p>
+                </div>
+                <a href="/profile"><img src="/image/user_1144760.png" alt="">Profile</a>
+                <a href="" onclick="logOutButton()"><img src="/image/logout_1828427.png" alt="">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div id="line"></div>
+    <div id="panal">
+        <div id="backHome">
+            <img onclick="backHome()" src="/image/back.png" alt="">
+        </div>
+        <div id="detailProfile">
+            <div id="imageProfile">
+                <div id="image"><img src="" alt="" id="profileImage">
+                    <div id="cameara" onclick="openPopUpupLoadImage()"><img
+                            src="/image/photo-camera-interface-symbol-for-button.png" alt=""></div>
+                </div>
+
+            </div>
+            <div id="detailpanal">
+                <div id="detail">
+                    <div id="detailInSite">
+                        <img src="/image/user_1144760.png" alt="">
+                        <div id="usernameForSession">username</div>
+
+                    </div>
+                    <div id="detailInSite">
+                        <img src="/image/arroba.png" alt="">
+                        <div id="emailForSession">email</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- <div>
+            <input type="text" name="" id="nameImageFile">
+            <button onclick="deletImage()">deletImage</button>
+            <img src="http://localhost:8000/get/image/1715355105269.jpeg " alt="">
+        </div> -->
+    </div>
+    <div id="popUpuploadImage">
+        <div style="display: flex;width: 100%;height: 100%;justify-content: center;align-items: center;">
+            <div id="displayPopUp">
+                <div id="displayPopUpClose" onclick="closePopUpupLoadImage()">X</div>
+                <div id="preview">
+                    <div id="previewNoFile">
+                        <div id="previewNoFileInfo">
+                            <img src="/image/upload.png" alt="">
+                            <p>No file chosen.</p>
+                            <p>( PNG , JPEG )</p>
+                        </div>
+                    </div>
+                    <div id="showImagePreview">
+                        <img src="" alt="" id="imagePreview">
+                    </div>
+                </div>
+                <input type="file" name="" id="uploadFile" hidden>
+                <div id="error">
+                    <p>File name not correct.</p>
+                </div>
+                <div id="blockButtonUploadFile">
+
+                    <button id="buttonUploadFile" onclick="chooseImageFile()">Choose a file</button>
+                </div>
+                <div id="blockButtonUploadFile" style="margin-top: 20px;">
+                    <button id="uploadToServer" onclick="sendToServer()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/javascript/getUserSession.js"></script>
+    <script src="/javascript/topmenu.js"></script>
+    <script src="/javascript/uploadImage.js"></script>
+    <script>
+        setUpDataInHomePage();
+        setUpDataInProfilePage();
+
+        function logOutButton() {
+            sessionStorage.clear()
+            location.href = "/";
+        }
+
+        // async function deletImage() {
+        //     const nameImageFile = document.getElementById("nameImageFile");
+        //     console.log(nameImageFile.value);
+        //     const fileName = nameImageFile.value;
+        //     const formData = new FormData();
+        //     formData.append('imageFile', fileName);
+
+        //     try {
+        //         const response = await fetch('http://localhost:8000/upload/deletImage', {
+        //             method: 'POST',
+        //             body: formData
+        //         });
+        //         //const result = await response.json();
+        //         if (response.ok) {
+        //             // Handle successful upload
+        //             console.log('File delete successfully');
+        //             //chagenSessionDataAfterUploadImage();
+        //         } else {
+        //             // Handle error
+        //             console.error('Delete failed:', response.statusText);
+        //         }
+        //     } catch (error) {
+        //         console.error('Connection failed:', error.message);
+        //     }
+        // }
+
+    </script>
+</body>
+
+</html>

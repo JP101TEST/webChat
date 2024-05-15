@@ -1,6 +1,6 @@
 <script>
     const session = sessionStorage.getItem("login");
-    console.log(session);
+    //console.log(session);
     if (session) {
         location.href = "/";
     }
@@ -13,70 +13,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="/css/output.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
+    <script type="module" src="/javascript/loginByGoogle.js">
+
+    </script>
 </head>
 
 <body>
 
-    <div class="static flex flex-col justify-center w-screen h-screen">
+    <!-- class="static flex flex-col justify-center w-screen h-screen" -->
+    <div class="container-center">
+        <!--<div class="w-48 h-48">
+            <img src="http://localhost:8000/get/image/417248005_261253173511314_7451734521740611883_n.jpg" alt="">
+        </div>-->
         <!-- Login  -->
-        <div class="self-center flex flex-col border border-gray-400 p-5 min-w-fit  w-96" id="mainPanalLogin">
-            <p class="self-center">Login</p>
-            <p class="self-center text-red-600 hidden" id="loginError">Username or password is not correct.</p>
-            <div class="self-center border border-gray-400 py-4 w-2/3">
+
+        <!-- class="self-center flex flex-col border border-gray-400 p-5 min-w-fit  w-96" -->
+        <div id="mainPanalLogin">
+            <p style="font-size: larger;">Login</p>
+            <p id="loginError">Username or password is not correct.</p>
+            <!-- self-center border border-gray-400 py-4 w-2/3 -->
+            <div class="boxInput">
                 <label for="usernameInput">User name</label><br>
-                <input class="border border-gray-400 w-full" type="text" id="usernameInput">
+                <input type="text" id="usernameInput">
             </div>
-            <div class="self-center border border-gray-400 py-4 w-2/3">
+            <div class="boxInput">
                 <label for="passwordInput">Password</label><br>
-                <input class="border border-gray-400 w-full" type="password" id="passwordInput">
+                <input type="password" id="passwordInput">
             </div>
-            <div class="flex flex-row justify-center text-center border border-gray-400 py-4">
-                <button class="border border-gray-400 mr-3 w-20" onclick="loginButton()">Login</button>
-                <button class="border border-gray-400 mr-3 w-20" onclick="toggleVisibilityRegister()">Register</button>
+            <!-- flex flex-row justify-center text-center border border-gray-400 py-4 -->
+            <div class="boxButtonLoginOrRegister">
+                <button onclick="loginButton()">Login</button>
+                <button onclick="openRegisterPenal()">Register</button>
             </div>
-            <p class="self-center">Or</p>
-            <div class="flex flex-row justify-center text-center border border-gray-400 py-4">
-                <button class="border border-gray-400 mr-3 w-20">Google</button>
+            <p>Or</p>
+            <div class="boxButtonLoginOrRegister">
+                <button id="googleSignInButton">Google</button>
             </div>
         </div>
         <!-- Register  -->
-        <div class="absolute self-center flex flex-col border border-gray-400 p-5 min-w-fit w-96 bg-white hidden"
-            id="panalRegister">
-            <p class="self-center mb-10">Register</p>
-            <div class="self-center border border-gray-400 py-4 w-2/3">
+        <!-- class="absolute self-center flex flex-col border border-gray-400 p-5 min-w-fit w-96 bg-white hidden" -->
+        <div id="panalRegister">
+            <p style="font-size: larger;">Register</p>
+            <div class="boxInput">
                 <label for="usernameInputRe">User name</label><br>
-                <p class="text-red-600" id="usernameInputReError">User name</p>
-                <input class="border border-gray-400 w-full" type="text" id="usernameInputRe">
+                <p id="usernameInputReError">User name</p>
+                <input type="text" title="Use a-zA-Z0-9 and _ only." id="usernameInputRe">
             </div>
-            <div class="self-center border border-gray-400 py-4 w-2/3">
+            <div class="boxInput">
                 <label for="passwordInputRe">Password</label><br>
-                <p class="text-red-600" id="passwordInputReError">User name</p>
-                <input class="border border-gray-400 w-full" type="password" id="passwordInputRe">
+                <p id="passwordInputReError">User name</p>
+                <input type="password" id="passwordInputRe">
             </div>
-            <div class="self-center border border-gray-400 py-4 w-2/3 mb-10">
+            <div class="boxInput">
                 <label for="emailInputRe">Email</label><br>
-                <p class="text-red-600" id="emailInputReError">User name</p>
-                <input class="border border-gray-400 w-full" type="email" id="emailInputRe">
+                <p id="emailInputReError">User name</p>
+                <input type="email" id="emailInputRe">
             </div>
-            <div class="flex flex-row justify-center text-center border border-gray-400 py-4">
-                <button class="border border-gray-400 mr-3 w-20 bg-slate-200"
-                    onclick="registerButton()">Register</button>
+            <div class="boxButtonLoginOrRegister">
+                <button onclick="registerButton()">Register</button>
             </div>
-            <div class="absolute top-0 right-0">
-                <button class="border border-gray-400 rounded-full w-6 h-6"
-                    onclick="toggleVisibilityRegister()">X</button>
-            </div>
-        </div>
-
-        <div class="absolute self-center flex flex-col border p-5 min-w-fit w-96 bg-white h-60 hidden"
-            id="panalSuccessfully">
-            <div class="h-full w-full flex justify-center">
-                <p class="self-center text-green-500 text-3xl">Successfully</p>
-            </div>
-            <div class="absolute top-0 right-0">
-                <button class="border border-gray-400 rounded-full w-6 h-6"
-                    onclick="toggleVisibilitySuccessfully()">X</button>
+            <div class="closeButton">
+                <button onclick="closeRegisterPenal()">X</button>
             </div>
         </div>
     </div>
@@ -84,10 +86,10 @@
 
 
 
-    <br>
+    <!-- <br>
     <div class="border border-gray-400 p-4">
         <button class="border border-gray-400 mr-3" id="hidShow" onclick="toggleVisibility()">Hid</button>
-    </div>
+    </div> -->
 
 </body>
 
@@ -99,21 +101,26 @@
         toggleButton.innerHTML = (toggleButton.innerHTML === 'Hid') ? 'Show' : 'Hid';
     }
 
-    function toggleVisibilityRegister() {
+    function openRegisterPenal() {
         const registerPanal = document.getElementById("panalRegister");
+        registerPanal.style.display = "flex";
+        resetValueInputRegister();
+    }
+
+    function closeRegisterPenal() {
+        const registerPanal = document.getElementById("panalRegister");
+        registerPanal.style.display = "none";
+        resetValueInputRegister();
+    }
+
+    function resetValueInputRegister() {
         const username = document.getElementById('usernameInputRe');
         const password = document.getElementById('passwordInputRe');
         const email = document.getElementById('emailInputRe');
         username.value = '';
         password.value = '';
         email.value = '';
-        registerPanal.classList.toggle("hidden");
         hiddenAllRegisterErrorDisplay();
-    }
-
-    function toggleVisibilitySuccessfully() {
-        const successfullyPanal = document.getElementById("panalSuccessfully");
-        successfullyPanal.classList.toggle("hidden");
     }
 
     async function loginButton() {
@@ -136,14 +143,19 @@
             });
 
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
             if (result.success) {
-                loginError.classList.add('hidden')
+                loginError.style.display = "none"
                 sessionStorage.setItem("login", true);
+                sessionStorage.setItem("googleLogin", false);
+                sessionStorage.setItem("userId", result.userId)
+                sessionStorage.setItem("username", result.username)
+                sessionStorage.setItem("email", result.email)
+                sessionStorage.setItem("image", result.image)
                 location.href = "/";
             } else {
                 loginError.innerText = result.messageError;
-                loginError.classList.remove('hidden')
+                loginError.style.display = "block"
             }
         } catch (error) {
             console.log('Connection failed:', error.message);
@@ -151,6 +163,7 @@
     }
 
     async function registerButton() {
+        //console.log("registerButton");
         const username = document.getElementById('usernameInputRe');
         const password = document.getElementById('passwordInputRe');
         const email = document.getElementById('emailInputRe');
@@ -162,7 +175,11 @@
             email: email.value
         };
 
-        console.log(data);
+        if (!checkInputRegister(data)) {
+            return;
+        }
+
+        //console.log(data);
 
         try {
             const response = await fetch('http://localhost:8000/loginRegister/register', {
@@ -173,17 +190,63 @@
                 body: JSON.stringify(data)
             });
             const result = await response.json();
-            console.log(result);
+            //console.log(result);
             registerErrorDisplay(result);
             if (result.success) {
-                toggleVisibilityRegister();
-                toggleVisibilitySuccessfully();
-            } else {
-
+                closeRegisterPenal()
             }
         } catch (error) {
             console.log('Connection failed:', error.message);
         }
+    }
+
+    function checkInputRegister(data) {
+        //console.log("data :", data);
+        const usernameError = document.getElementById('usernameInputReError');
+        const passwordError = document.getElementById('passwordInputReError');
+        const emailError = document.getElementById('emailInputReError');
+        let result = true; // Assume the input is invalid initially
+        // Check if any input field is empty
+        if (data.username === '') {
+
+            usernameError.style.display = "block";
+            usernameError.innerText = "Username is empty";
+
+            result = false; // Set result to false if username is empty
+
+        } else {
+            console.log("data.username Pattern");
+            const checkPattern = checkInputUsernamePatternRegister(data.username);
+            if (!checkPattern) {
+                usernameError.innerText = "Use a-zA-Z0-9 and _ only.";
+                usernameError.style.display = "block";
+                result = false; // Set result to false if username doesn't match the pattern
+            }
+        }
+
+        if (data.password === '') {
+            passwordError.innerText = "Password is empty";
+            passwordError.style.display = "block";
+            result = false; // Set result to false if password is empty
+        }
+
+        if (data.email === '') {
+            emailError.innerText = "Email is empty";
+            emailError.style.display = "block";
+            result = false; // Set result to false if email is empty
+        }
+
+        return result; // Return the final result indicating input validity
+    }
+
+    function checkInputUsernamePatternRegister(username) {
+        // Define a regular expression pattern
+        const pattern = /^[a-zA-Z0-9_]+$/;
+
+        // Test if the username matches the pattern
+        const result = pattern.test(username);
+
+        return result;
     }
 
     function registerErrorDisplay(result) {
@@ -192,17 +255,17 @@
         const emailError = document.getElementById('emailInputReError');
         if (result.messageUsernameError) {
             usernameError.innerText = result.messageUsernameError;
-            usernameError.classList.toggle("hidden");
+            usernameError.style.display = "block";
 
         }
         if (result.messagePasswordError) {
             passwordError.innerText = result.messagePasswordError;
-            passwordError.classList.toggle("hidden");
+            passwordError.style.display = "block";
 
         }
         if (result.messageEmailError) {
             emailError.innerText = result.messageEmailError;
-            emailError.classList.toggle("hidden");
+            emailError.style.display = "block";
 
         }
     }
@@ -211,14 +274,11 @@
         const usernameError = document.getElementById('usernameInputReError');
         const passwordError = document.getElementById('passwordInputReError');
         const emailError = document.getElementById('emailInputReError');
-        usernameError.classList.add("hidden");
-        passwordError.classList.add("hidden");
-        emailError.classList.add("hidden");
+        usernameError.style.display = "none";
+        passwordError.style.display = "none";
+        emailError.style.display = "none";
     }
 
-    function test() {
-        console.log(55);
-    }
 </script>
 
 </html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/chat.css">
+</head>
+
+<body>
+    <div id="topBar">
+        <div id="topBarLogo">
+            <p onclick="backHome()" style="cursor: pointer;">Chat.</p>
+        </div>
+        <div id="topBarDropdown">
+            <img src="https://i.pinimg.com/originals/7b/a0/a6/7ba0a684552cb5ed128af09ee0dc1a30.jpg"
+                alt="Flowers in Chania">
+            <div id="topBarDropdownMenu">
+                <div><img src="https://i.pinimg.com/originals/7b/a0/a6/7ba0a684552cb5ed128af09ee0dc1a30.jpg"
+                        alt="Flowers in Chania" id="image">username</div>
+                <a href="/html/editProfile.html"><img src="/image/user_1144760.png" alt="">Profile</a>
+                <a href="https://www.youtube.com/watch?v=G0rsdbbE3uI" target="_blank"><img
+                        src="/image/logout_1828427.png" alt="">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div id="line"></div>
+    <div id="panal">
+        <div id="panalMenu">
+            <div id="panalMenuSearch">
+                <input type="text">
+                <button><img src="/image/search.png" alt=""></button>
+            </div>
+            <div id="line"></div>
+            <div id="panalMenuFriend">
+                <!-- <a href="" id="panalMenuFriendChat"><img src="/image/bubble-chat.png" alt="" title="Chat">Chat</a> -->
+                <a href="/html/addFriend.html" id="panalMenuFriendAddFriend"><img src="/image/add-user.png" alt="" title="Add friend">Add
+                    friend</a>
+            </div>
+            <div id="line"></div>
+            <div id="panalMenuList">
+
+            </div>
+        </div>
+
+        <div id="panalDetail">
+            <div id="panalDetailEnabale">
+                <div class="panalDetailUser">
+                    <div class="imagePerson">
+                        <img src="/image/user_1144760.png" alt="">
+                    </div>
+                    <div class="nameUser">
+                        username
+                    </div>
+                </div>
+                <div id="panalDetailChat">
+                </div>
+                <div class="panalDetailMessage">
+                    <!-- <input type="text"> -->
+                    <textarea name="" id="myTextarea"></textarea>
+                    <button><img src="/image/paper-plane.png" alt=""></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/javascript/topmenu.js"></script>
+    <script>
+
+        function createSlotUsers(num) {
+            const friendSlots = document.getElementById("panalMenuList");
+            let list = ``;
+            for (let index = 0; index < num; index++) {
+                list += `
+                        <div class="friendSlot">
+                            <div class="imagePerson">
+                                <img src="/image/user_1144760.png" alt="">
+                            </div>
+                            <div class="name">
+                                <p>Username ${index + 1}</p>
+                            </div>
+                        </div>
+                        `
+            }
+            friendSlots.innerHTML = list;
+        }
+
+
+
+        function creatMessage(num) {
+            const panalDetailChat = document.getElementById("panalDetailChat");
+            for (let index = 0; index < num; index++) {
+                const chatBox = document.createElement("div");
+                chatBox.classList.add("chatBox");
+                const chatBoxInsite = document.createElement("div")
+                chatBoxInsite.classList.add("chatBoxInsite");
+                const message = document.createElement("div")
+                message.classList.add("message");
+                panalDetailChat.appendChild(chatBox);
+                chatBox.appendChild(chatBoxInsite);
+                if (index % 2 === 0) {
+                    const imagePerson = document.createElement("div")
+                    imagePerson.classList.add("imagePerson");
+                    imagePerson.innerHTML = `<img src="/image/user_1144760.png" alt="">`;
+                    chatBoxInsite.appendChild(imagePerson);
+                    chatBox.style.justifyContent = "start";
+
+                } else {
+                    chatBox.style.justifyContent = "end";
+                }
+                chatBoxInsite.appendChild(message);
+                message.innerText = "Compared to display: block, the major difference is that display: inline-block does not                        add"
+
+
+            }
+        }
+
+
+        createSlotUsers(25);
+        creatMessage(15);
+
+        // const textarea = document.getElementById("myTextarea");
+
+        // textarea.addEventListener("keydown", function (event) {
+        //     if (event.keyCode === 13 && !event.shiftKey) {
+        //         event.preventDefault();
+        //         console.log(textarea.value.trim());
+        //         textarea.value = null;
+        //     }
+        // });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<script>
+    const session = sessionStorage.getItem("login");
+    //console.log(session);
+    if (!session) {
+        location.href = "/login";
+    }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/addFriend.css">
+</head>
+
+<body>
+    <div id="topBar">
+        <div id="topBarLogo">
+            <p onclick="backHome()" style="cursor: pointer;">Chat.</p>
+        </div>
+        <div id="topBarDropdown">
+            <img src="" alt="Flowers in Chania" id="imageUserTop" style="background-color: white;">
+            <div id="topBarDropdownMenu">
+                <div><img src="" alt="Flowers in Chania" id="image" style="background-color: white;">
+                    <p id="username"></p>
+                </div>
+                <a href="/profile"><img src="/image/user_1144760.png" alt="">Profile</a>
+                <a href="" onclick="logOutButton()"><img src="/image/logout_1828427.png" alt="">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div id="line"></div>
+    <div id="panal">
+        <div id="backHome">
+            <img onclick="backHome()" src="/image/back.png" alt="">
+        </div>
+        <div id="panalMenuSearch">
+            <input type="text" id="inputUsername" placeholder="Search friend username." oninput="searchFriend()">
+            <!-- <button><img src="/image/search_white.png" alt=""></button> -->
+        </div>
+        <div class="userLists">
+            <div id="userListsPenal">
+                <!-- <div class="list">
+                    <div class="listHead">
+                        <div>
+                            <img src="https://i.pinimg.com/originals/7b/a0/a6/7ba0a684552cb5ed128af09ee0dc1a30.jpg"
+                            alt="Flowers in Chania">
+                        </div>
+                        <div>
+                            <p>username</p>
+                        </div>
+                    </div>
+                    <div class="listButton">
+                        <button>add</button>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <script src="/javascript/topmenu.js"></script>
+    <script src="/javascript/getUserSession.js"></script>
+    <script src="/javascript/addFriend.js"></script>
+    <script src="/javascript/getData.js"></script>
+    <script src="/javascript/globalFuntion.js"></script>
+    <script>
+        setUpDataInHomePage();
+
+        // function creatList(num) {
+        //     const userListsPenal = document.getElementById("userListsPenal")
+
+        //     for (let index = 0; index < num; index++) {
+        //         const list = document.createElement("div");
+        //         list.classList.add("list")
+        //         list.innerHTML = `
+        //                             <div class="listHead">
+        //                                 <div>
+        //                                     <img src="https://i.pinimg.com/originals/7b/a0/a6/7ba0a684552cb5ed128af09ee0dc1a30.jpg" alt="Flowers in Chania">
+        //                                 </div>
+        //                                 <div>
+        //                                     <p>username</p>
+        //                                 </div>
+        //                             </div>
+        //                             <div class="listButton">
+        //                                 <button>add</button>
+        //                             </div>
+        //     `;
+        //         userListsPenal.appendChild(list);
+        //     }
+
+        // }
+
+        function logOutButton() {
+            sessionStorage.clear()
+            location.href = "/";
+        }
+        //creatList(25);
+        searchFriend();
+    </script>
+</body>
+
+</html>

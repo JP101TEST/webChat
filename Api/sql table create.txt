@@ -1,8 +1,60 @@
 # Table user
+user: id(pk),username,password,email,image
 CREATE TABLE Users (
-  id INT NOT NULL AUTO_INCREMENT,
+  id_user INT(255) NOT NULL AUTO_INCREMENT,
   username VARCHAR(255) NOT NULL UNIQUE,  -- Enforce unique username
   email VARCHAR(255) NOT NULL UNIQUE,  -- Enforce unique emails
   password VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)  -- Use the id column for Primary Key
+  image VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id_user)  -- Use the id column for Primary Key
+) ENGINE=InnoDB;
+
+# Table rooms
+rooms: id(pk),name
+CREATE TABLE Rooms (
+  id_room INT(255) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (id_room)  -- Use the id column for Primary Key
+) ENGINE=InnoDB;
+
+# Table user_room
+users_rooms:id_rooms(pk,fk),id_users(pk,fk)
+CREATE TABLE user_room (
+  id_room INT(255) NOT NULL,
+  id_user INT(255) NOT NULL,
+  PRIMARY KEY ( id_room,id_user), -- Combined PK of user-room pairs
+  FOREIGN KEY (id_room) REFERENCES Rooms(id_room) ON DELETE CASCADE, -- FK referencing Rooms table
+  FOREIGN KEY (id_user) REFERENCES Users(id_user) ON DELETE CASCADE -- FK referencing Users table
+) ENGINE=InnoDB;
+
+# Table messages
+messages:id_message(pk),id_room(fk),id_user(fk),message,timestamp
+CREATE TABLE messages (
+  id_message INT(255) NOT NULL AUTO_INCREMENT,
+  id_room INT(255) NOT NULL,
+  id_user INT(255) NOT NULL,
+  message VARCHAR(255) NOT NULL,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id_message),
+  FOREIGN KEY (id_room) REFERENCES Rooms(id_room) ON DELETE CASCADE,
+  FOREIGN KEY (id_user) REFERENCES Users(id_user) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+# Table friends
+rooms: id_friend(pk),id_user(fk),status
+CREATE TABLE friends (
+  id_friend INT(255) NOT NULL AUTO_INCREMENT,
+  id_user INT(255),
+  status ENUM('friend', 'unfriend') NOT NULL,
+  PRIMARY KEY (id_friend),  -- Use the id column for Primary Key
+  FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE -- FK referencing Users table
+) ENGINE=InnoDB;
+
+# Table user_friend
+users_rooms:user_friend(pk,fk),id_users(pk,fk)
+CREATE TABLE user_friend (
+  id_friend INT(255) NOT NULL,
+  id_user INT(255) NOT NULL,
+  PRIMARY KEY ( id_friend ,id_user), -- Combined PK of user-room pairs
+  FOREIGN KEY (id_friend) REFERENCES Friends(id_friend) ON DELETE CASCADE, -- FK referencing Friends table
+  FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE -- FK referencing Users table
 ) ENGINE=InnoDB;
