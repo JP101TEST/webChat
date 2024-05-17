@@ -67,4 +67,33 @@ router.post('/searchRooms', async (req, res) => {
     }
 });
 
+router.post('/getFriendStatus', async (req, res) => {
+    console.log(req.body);
+    const { userFriendId, userId } = req.body;
+    try {
+        let sql = 'SELECT f.* FROM user_friend AS uf JOIN user_friend AS uf2 ON uf.id_friend = uf2.id_friend JOIN friends AS f ON uf.id_friend = f.id_friend WHERE uf.id_user = ? AND uf2.id_user = ?;';
+        const values = [userFriendId, userId];
+        const [rows, fields] = await db.query(sql, values);
+        res.status(200).json({ message: 'get friend lists successfully', status: rows });
+    } catch (error) {
+        console.error('Add friend error:', error);
+        res.status(500).json({ message: 'Failed to get friend lists' });
+    }
+});
+
+
+
+router.post('/getMessageLists', async (req, res) => {
+    console.log(req.body);
+    const { idRoom } = req.body;
+    try {
+        let sql = 'SELECT `id_user` , `message`,`time_send` FROM `messages` WHERE `id_room` = ? ORDER BY `time_send`;';
+        const values = [idRoom];
+        const [rows, fields] = await db.query(sql, values);
+        res.status(200).json({ message: 'get message lists successfully', lists: rows });
+    } catch (error) {
+        console.error('Add friend error:', error);
+        res.status(500).json({ message: 'Failed to get message lists' });
+    }
+});
 module.exports = router;

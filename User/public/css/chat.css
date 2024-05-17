@@ -140,10 +140,11 @@
             display: flex;
 
             .imagePerson {
-                height: 100%;
+                height: 80px;
 
                 img {
                     height: 100%;
+                    width: 80px;
                     border-radius: 100%;
                 }
             }
@@ -163,7 +164,9 @@
             height: 100%;
             display: flex;
             align-items: center;
-            button{
+            #panalDetailUserB{
+                display: flex;
+                justify-content: center;
                 width: 100px;
                 border-radius: 15px;
                 border: none;
@@ -171,8 +174,23 @@
                 color: white;
                 padding: 5px 15px 5px 15px;
             }
-            button:hover{
+            #panalDetailUserB:hover{
                 background-color: rgb(223, 141, 157);
+                cursor: pointer;
+            }
+
+            #panalDetailUserUB{
+                display: none;
+                justify-content: center;
+                width: 100px;
+                border-radius: 15px;
+                border: none;
+                background-color: rgb(39, 162, 17);
+                color: white;
+                padding: 5px 15px 5px 15px;
+            }
+            #panalDetailUserUB:hover{
+                background-color: rgb(138, 174, 110);
                 cursor: pointer;
             }
         }
@@ -333,7 +351,9 @@
             border-color: white;
 
             img {
-                height: 100%;
+                height: 50px;
+                width: 50px;
+                border-radius: 100%;
             }
         }
 
@@ -349,4 +369,9 @@
         }
     }
 
+}
+
+
+#buttonSendMessage:hover{
+    cursor: pointer;
 }

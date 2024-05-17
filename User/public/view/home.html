@@ -73,15 +73,16 @@
                 <div class="panalDetailUser">
                     <div class="panalDetailUserP">
                         <div class="imagePerson">
-                            <img src="/image/user_1144760.png" alt="">
+                            <img id="imagePerson" src="/image/user_1144760.png" alt="">
                         </div>
                         <div class="nameUser">
-                            <div>username</div>
-                            <div style="font-size: 16px;width: auto;">You have been blocked by this friend.</div>
+                            <div id="usernameFrind">username</div>
+                            <div style="font-size: 16px;width: auto; display: none;color: gray;" id="blockDetail"></div>
                         </div>
                     </div>
-                    <div class="panalDetailUserB">
-                        <button>Block</button>
+                    <div class="panalDetailUserB" id="panalDetailUserBDiv">
+                        <button id="panalDetailUserB" onclick="blockFriend()">Block</button>
+                        <button id="panalDetailUserUB" onclick="unblockFriend()">Unblock</button>
                     </div>
                 </div>
                 <div id="panalDetailChat">
@@ -89,7 +90,7 @@
                 <div class="panalDetailMessage">
                     <!-- <input type="text"> -->
                     <textarea name="" id="myTextarea"></textarea>
-                    <button id="sendMessage"><img src="/image/paper-plane.png" alt=""></button>
+                    <button id="buttonSendMessage" onclick="sendMessage()"><img src="/image/paper-plane.png" alt=""></button>
                 </div>
             </div>
         </div>

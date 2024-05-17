@@ -31,17 +31,21 @@ async function addFriend(idFriend) {
     userListsPenal.innerHTML = ``;
     const userId = sessionStorage.getItem("userId");
     //console.log("idFriend:",idFriend);
-    const response = await fetch('http://localhost:8000/add/addfriend', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ friendId: idFriend, userId: userId })
-    });
-    const resultFromResponse = await response.json();
-    console.log(resultFromResponse.message);
+    try {
+        const response = await fetch('http://localhost:8000/add/addfriend', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ friendId: idFriend, userId: userId })
+        });
+        const resultFromResponse = await response.json();
+        console.log(resultFromResponse.message);
 
-    await searchFriend();
+        await searchFriend();
+    } catch (error) {
+        console.error('Connection failed:', error.message);
+    }
 }
 
 // function deletFrontWord(word) {
