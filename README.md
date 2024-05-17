@@ -11,15 +11,15 @@ Web chat create by node.js express.js
 - Setup database
    - Create database In MAMP or other progarm.
    - Setup database location in Api/modules/database.js
-     ```
-     const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'chat_app',
-    port: 3306
+
+const pool = mysql.createPool({
+host: 'localhost',
+user: 'root',
+password: 'root',
+database: 'chat_app',
+port: 3306
 });
-```
+
    - Import database use database.sql
 - Run 
 	- Open terminal in folder Api and use `npm start`
