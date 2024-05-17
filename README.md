@@ -19,7 +19,7 @@ Web chat create by node.js express.js
         database: 'chat_app',
         port: 3306
         });
-
+    `````````
    - Import database use database.sql
 - Run 
 	- Open terminal in folder Api and use `npm start`
