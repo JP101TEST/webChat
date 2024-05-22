@@ -2,6 +2,7 @@
 
 const express = require('express');
 const app = express();
+
 const loginRegisterRoutes = require('./modules/loginRegister');
 const getDataModule = require('./modules/getData');
 const upload = require('./modules/upload');
@@ -25,6 +26,7 @@ app.use('/get', getDataModule);
 app.use('/upload', upload);
 app.use('/add', addFriend)
 app.use('/chat', chat)
+
 
 app.listen(8000, () => {
     console.log("Start server at port 8000.Run in http://localhost:8000/");

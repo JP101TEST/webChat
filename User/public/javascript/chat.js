@@ -1,35 +1,39 @@
-let currentIdRoom;
-let currentFriend;
-let currentIdUserFriend;
-let currentIdUserFriendUsername;
-let currentIdUserFriendImage;
+let allListChatRoomUserHave;
+let currentSelectIdChatRoom;
+let currentSelectFriendRelationship
+let currentSelectFriendId;
+let currentSelectUserFriendUsername;
+let currentSelectUserFriendImage;
 let currentIdUser = parseInt(sessionStorage.getItem("userId"));
 
-const panelMenuList = document.getElementById("panalMenuList");
+const panelMenuList = document.getElementById("panelMenuList");
 const buttonSendMessage = document.getElementById("buttonSendMessage");
-const panelDetailUserB = document.getElementById("panalDetailUserB");
-const panelDetailUserUB = document.getElementById("panalDetailUserUB");
-const panelDetailEnable = document.getElementById("panalDetailEnabale");
-const usernameFrind = document.getElementById("usernameFrind");
+const panelDetailUserB = document.getElementById("panelDetailUserB");
+const panelDetailUserUB = document.getElementById("panelDetailUserUB");
+const panelDetailEnabled = document.getElementById("panelDetailEnabled");
+const usernameFriend = document.getElementById("usernameFriend");
 const imagePerson = document.getElementById("imagePerson");
 const blockDetail = document.getElementById("blockDetail");
-const panelDetailChat = document.getElementById("panalDetailChat");
+const panelDetailChat = document.getElementById("panelDetailChat");
 const myTextarea = document.getElementById("myTextarea");
+
 
 async function searchRooms() {
     const listRooms = await getRooms();
+    console.log(listRooms);
+    allListChatRoomUserHave = listRooms;
     createListRooms(listRooms);
     if (listRooms.length > 0) {
-        setDisplay(panelDetailEnable, "flex");
+        setDisplay(panelDetailEnabled, "flex");
         //console.log("listRooms[0].id_user :",listRooms[0].id_user);
         //console.log("start status:",status);
         const status = await getDataFriend(listRooms[0].id_user);
         const messageLists = await getMessageLists(listRooms[0].id_room);
-        currentIdRoom = listRooms[0].id_room;
-        currentFriend = status[0];
-        currentIdUserFriend = listRooms[0].id_user;
-        currentIdUserFriendUsername = deletFrontWord(listRooms[0].username);
-        currentIdUserFriendImage = listRooms[0].image;
+        currentSelectIdChatRoom = listRooms[0].id_room;
+        currentSelectFriendRelationship = status[0];
+        currentSelectFriendId = listRooms[0].id_user;
+        currentSelectUserFriendUsername = deleteFrontWord(listRooms[0].username);
+        currentSelectUserFriendImage = listRooms[0].image;
         updateNameRoomInChatPanel();
         renderMessageLists(messageLists);
     }
@@ -42,45 +46,57 @@ function createListRooms(lists) {
     } else {
         for (let index = 0; index < lists.length; index++) {
             list += `
-                    <div class="friendSlot" title="${deletFrontWord(lists[index].username)}" onclick="setUpChatPanel(${lists[index].id_room},${lists[index].id_user},'${deletFrontWord(lists[index].username)}','${deletFrontWord(lists[index].image)}')">
+                    <div class="friendSlot" title="${deleteFrontWord(lists[index].username)}" onclick="setUpChatPanel(${lists[index].id_room},${lists[index].id_user},'${deleteFrontWord(lists[index].username)}','${deleteFrontWord(lists[index].image)}')">
                         <div class="imagePerson">
-                            <img src="http://localhost:8000/get/image/${deletFrontWord(lists[index].image)}" alt="">
+                            <img src="http://localhost:8000/get/image/${deleteFrontWord(lists[index].image)}" alt="">
+                        <div class="activeUser" id="idFriend${lists[index].id_user}"></div>
+                        
                         </div>
                         <div class="name">
-                            <p >${limitUsername(deletFrontWord(lists[index].username), 7)}</p>
+                            <p >${limitUsername(deleteFrontWord(lists[index].username), 7)}</p>
                         </div>
                     </div>
                     `
         }
     }
-    setHTML(panelMenuList, list)
+    setHTML(panelMenuList, list);
+
+    // const idRoom = 1;
+    // const idFriend = 2;
+    // const testDiv = document.getElementById(`idRoom${idRoom}idFriend${idFriend}`);
+    // if (testDiv) {
+    //     testDiv.innerHTML = "TestHelper";
+    // } else {
+    //     console.error("Element not found");
+    // }
+
     //console.log(friendSlots.children);
 }
 
 async function setUpChatPanel(idRoom, idUserFriend, friendUsername, image) {
     const status = await getDataFriend(idUserFriend);
     const messageLists = await getMessageLists(idRoom);
-    currentIdRoom = idRoom;
-    currentFriend = status[0];
-    currentIdUserFriend = idUserFriend;
-    currentIdUserFriendUsername = friendUsername;
-    currentIdUserFriendImage = image;
-    resetAllActionInPanelDetailEnable();
+    currentSelectIdChatRoom = idRoom;
+    currentSelectFriendRelationship = status[0];
+    currentSelectFriendId = idUserFriend;
+    currentSelectUserFriendUsername = friendUsername;
+    currentSelectUserFriendImage = image;
+    resetAllActionInPanelDetailEnabled();
     updateNameRoomInChatPanel();
     renderMessageLists(messageLists);
 }
 
 function updateNameRoomInChatPanel() {
-    // console.log("currentIdUserFriend :", currentIdUserFriend);
-    // console.log("currentIdRoom :", currentIdRoom);
-    // console.log("currentFriend :", currentFriend);
-    if (currentFriend.status == 'unfriend') {
+    console.log("currentSelectUserFriend :", currentSelectFriendId);
+    console.log("currentSelectIdChatRoom :", currentSelectIdChatRoom);
+    console.log("currentSelectFriendRelationship :", currentSelectFriendRelationship);
+    if (currentSelectFriendRelationship.status == 'unfriend') {
         setDisable(myTextarea, true);
         setDisable(buttonSendMessage, true);
-        console.log("currentFriend.id_user :", currentFriend.id_user, "|currentIdUser :", currentIdUser);
-        if (currentFriend.id_user === currentIdUser) {
-            console.log("No");
-            setText(blockDetail, `You have been blocked by ${limitUsername(currentIdUserFriendUsername, 9)}.`);
+        console.log("currentSelectFriendRelationship.id_user :", currentSelectFriendRelationship.id_user, "|currentIdUser :", currentIdUser);
+        if (currentSelectFriendRelationship.id_user === currentIdUser) {
+            //console.log("No");
+            setText(blockDetail, `You have been blocked.`);
             setDisplay(blockDetail, "flex");
             setDisplay(panelDetailUserB, "none");
             setDisplay(panelDetailUserUB, "none");
@@ -88,78 +104,112 @@ function updateNameRoomInChatPanel() {
             setDisplay(panelDetailUserUB, "flex");
             setDisplay(panelDetailUserB, "none");
         }
-    } else {
-        setDisable(buttonSendMessage, false);
-    }
-    setText(usernameFrind, currentIdUserFriendUsername);
-    setAttributeCustom(imagePerson, "src", `http://localhost:8000/get/image/${currentIdUserFriendImage}`);
+    } 
+    // else {
+    //     setDisable(buttonSendMessage, false);
+    // }
+    setText(usernameFriend, currentSelectUserFriendUsername);
+    setAttributeCustom(imagePerson, "src", `http://localhost:8000/get/image/${currentSelectUserFriendImage}`);
+}
+
+function hidBlockBottom() {
+    setText(blockDetail, `You have been blocked.`);
+    setDisplay(blockDetail, "flex");
+    setDisplay(panelDetailUserB, "none");
+    setDisplay(panelDetailUserUB, "none");
+    setDisable(buttonSendMessage, true);
+    setDisable(myTextarea, true);
+}
+
+function showBlockBottom() {
+    setDisplay(blockDetail, "none");
+    setDisplay(panelDetailUserUB, "none");
+    setDisplay(panelDetailUserB, "flex");
+    setDisable(buttonSendMessage, false);
+    setDisable(myTextarea, false);
 }
 
 async function blockFriend() {
     try {
-        // console.log("idFrind :", currentFriend.id_friend);
-        // console.log("idUserFriend :", currentIdUserFriend);
+        // console.log("idFriend :", currentSelectFriendRelationship.id_friend);
+        // console.log("idUserFriend :", currentSelectUserFriend);
         const response = await fetch('http://localhost:8000/chat/blockFriend', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ idFrind: currentFriend.id_friend, idUserFriend: currentIdUserFriend })
+            body: JSON.stringify({ idFriend: currentSelectFriendRelationship.id_friend, idUserFriend: currentSelectFriendId })
         });
-        const result = await response.json();
-        if (result) {
-            setDisable(buttonSendMessage, true);
-            setDisable(myTextarea, true);
-            setInputValue(myTextarea, "");
-            setDisplay(panelDetailUserB, "none");
-            setDisplay(panelDetailUserUB, "flex");
+        if (response.ok) {
+            displayBlockFriend();
+            return { userIdWhoHashBlock: currentSelectFriendId, userIdWhoBlock: currentIdUser};
         } else {
-            // console.log(error)
-        }
-    } catch (error) {
-        console.error('Connection failed:', error.message);
-    }
-}
-async function unblockFriend() {
-    try {
-        // console.log("idFriend :", currentFriend.id_friend);
-        const response = await fetch('http://localhost:8000/chat/unblockFriend', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ idFriend: currentFriend.id_friend })
-        });
-        const result = await response.json();
-        if (result) {
-            setDisable(buttonSendMessage, false);
-            setDisable(myTextarea, false);
-            setDisplay(panelDetailUserB, "flex");
-            setDisplay(panelDetailUserUB, "none");
-        } else {
-            // console.log(error)
+            console.log("block error");
         }
     } catch (error) {
         console.error('Connection failed:', error.message);
     }
 }
 
+function displayBlockFriend() {
+    setDisable(buttonSendMessage, true);
+    setDisable(myTextarea, true);
+    setInputValue(myTextarea, "");
+    setDisplay(panelDetailUserB, "none");
+    setDisplay(panelDetailUserUB, "flex");
+}
+async function unblockFriend() {
+    try {
+        // console.log("idFriend :", currentSelectFriendRelationship.id_friend);
+        const response = await fetch('http://localhost:8000/chat/unblockFriend', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ idFriend: currentSelectFriendRelationship.id_friend })
+        });
+        if (response.ok) {
+            const result = await response.json();
+            displayUnblockFriend();
+            return { userIdWhoHashUnblock: currentSelectFriendId, userIdWhoUnblock: currentIdUser};
+        } else {
+            console.log("Unblock error");
+        }
+    } catch (error) {
+        console.error('Connection failed:', error.message);
+    }
+}
+
+function displayUnblockFriend() {
+    setDisable(buttonSendMessage, false);
+    setDisable(myTextarea, false);
+    setDisplay(panelDetailUserB, "flex");
+    setDisplay(panelDetailUserUB, "none");
+}
+
 async function sendMessage() {
     try {
-        // console.log("idRoom :", currentIdRoom);
+        // console.log("idRoom :", currentSelectIdChatRoom);
         // console.log("idUser :", currentIdUser);
         // console.log("myTextarea :", myTextarea.value);
+        if (myTextarea.value == "") {
+            alert("Message empty");
+            return;
+        }
         const response = await fetch('http://localhost:8000/chat/sendMessage', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ idRoom: currentIdRoom, idSendUser: currentIdUser, message: myTextarea.value })
+            body: JSON.stringify({ idRoom: currentSelectIdChatRoom, idSendUser: currentIdUser, message: myTextarea.value })
         });
         if (response.ok) {
-            const result = await response.json();
+            //const result = await response.json();
+            const oleMessage = myTextarea.value;
             addNewMessage(currentIdUser, myTextarea.value);
             setInputValue(myTextarea, "");
+            setDisable(buttonSendMessage, true);
+            return {userIdWhoSendMessage: currentIdUser,userIdWhoGetMessage: currentSelectFriendId,message: oleMessage}
         } else {
             addNewMessage(currentIdUser, "Word is to long!");
         }
@@ -171,21 +221,21 @@ async function sendMessage() {
 function renderMessageLists(list) {
     for (let index = 0; index < list.length; index++) {
         const chatBox = document.createElement("div");
-        const chatBoxInsite = document.createElement("div");
+        const chatBoxInSite = document.createElement("div");
         const messageBlock = document.createElement("div");
         chatBox.classList.add("chatBox");
-        chatBoxInsite.classList.add("chatBoxInsite");
+        chatBoxInSite.classList.add("chatBoxInSite");
         messageBlock.classList.add("message");
         setText(messageBlock, list[index].message);
         if (list[index].id_user != currentIdUser) {
             chatBox.style.justifyContent = "start";
-            setHTML(chatBoxInsite, `<div class="imagePerson"> <img src="http://localhost:8000/get/image/${currentIdUserFriendImage}" alt=""> </div>`);
+            setHTML(chatBoxInSite, `<div class="imagePerson"> <img src="http://localhost:8000/get/image/${currentSelectUserFriendImage}" alt=""> </div>`);
         } else {
             chatBox.style.justifyContent = "end";
 
         }
-        chatBoxInsite.appendChild(messageBlock);
-        chatBox.appendChild(chatBoxInsite);
+        chatBoxInSite.appendChild(messageBlock);
+        chatBox.appendChild(chatBoxInSite);
         panelDetailChat.appendChild(chatBox);
     }
     panelDetailChat.scrollTop = panelDetailChat.scrollHeight;
@@ -193,31 +243,51 @@ function renderMessageLists(list) {
 
 function addNewMessage(idSendUser, message) {
     const chatBox = document.createElement("div");
-    const chatBoxInsite = document.createElement("div");
+    const chatBoxInSite = document.createElement("div");
     const messageBlock = document.createElement("div");
     chatBox.classList.add("chatBox");
-    chatBoxInsite.classList.add("chatBoxInsite");
+    chatBoxInSite.classList.add("chatBoxInSite");
     messageBlock.classList.add("message");
     setText(messageBlock, message);
     if (idSendUser != currentIdUser) {
         chatBox.style.justifyContent = "start";
-        setHTML(chatBoxInsite, `<div class="imagePerson"> <img src="http://localhost:8000/get/image/${currentIdUserFriendImage}" alt=""> </div>`);
+        setHTML(chatBoxInSite, `<div class="imagePerson"> <img src="http://localhost:8000/get/image/${currentSelectUserFriendImage}" alt=""> </div>`);
     } else {
         chatBox.style.justifyContent = "end";
 
     }
-    chatBoxInsite.appendChild(messageBlock);
-    chatBox.appendChild(chatBoxInsite);
+    chatBoxInSite.appendChild(messageBlock);
+    chatBox.appendChild(chatBoxInSite);
     panelDetailChat.appendChild(chatBox);
     panelDetailChat.scrollTop = panelDetailChat.scrollHeight;
 }
 
-function resetAllActionInPanelDetailEnable() {
-    setDisable(buttonSendMessage, false);
+function resetAllActionInPanelDetailEnabled() {
+    setDisable(buttonSendMessage, true);
     setDisable(myTextarea, false);
     setInputValue(myTextarea, "");
     setDisplay(panelDetailUserB, "flex");
     setDisplay(panelDetailUserUB, "none");
     setDisplay(blockDetail, "none");
     setHTML(panelDetailChat, ``);
+}
+
+function checkInputMessage() {
+    if (myTextarea.value == "") {
+        setDisable(buttonSendMessage, true);
+    }else{
+        setDisable(buttonSendMessage, false);
+    }
+}
+
+function getAllListChatRoomUserHave() {
+    return allListChatRoomUserHave;
+}
+
+function getCurrentSelectFriendId() {
+    return currentSelectFriendId;
+}
+
+function getCurrentIdUser() {
+    return currentIdUser;
 }

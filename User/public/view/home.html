@@ -17,7 +17,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/chat.css">
-
 </head>
 
 <body>
@@ -49,48 +48,49 @@
         </div>
     </div>
     <div id="line"></div>
-    <div id="panal">
-        <div id="panalMenu">
-            <div id="panalMenuSearch">
+    <div id="panel">
+        <div id="panelMenu">
+            <div id="panelMenuSearch">
                 <input type="text" id="inputUsername" placeholder="Search room." oninput="searchRooms()">
                 <!-- <button ><img src="/image/search_white.png" alt=""></button> -->
             </div>
             <div id="line"></div>
-            <div id="panalMenuFriend">
-                <!-- <a href="" id="panalMenuFriendChat"><img src="/image/bubble-chat.png" alt="" title="Chat">Chat</a> -->
-                <a href="/addFriend" id="panalMenuFriendAddFriend"><img src="/image/add-user_white.png" alt=""
+            <div id="panelMenuFriend">
+                <!-- <a href="" id="panelMenuFriendChat"><img src="/image/bubble-chat.png" alt="" title="Chat">Chat</a> -->
+                <a href="/addFriend" id="panelMenuFriendAddFriend"><img src="/image/add-user_white.png" alt=""
                         title="Add friend">Add
                     friend</a>
             </div>
             <div id="line"></div>
-            <div id="panalMenuList">
+            <div id="panelMenuList">
 
             </div>
         </div>
 
-        <div id="panalDetail">
-            <div id="panalDetailEnabale">
-                <div class="panalDetailUser">
-                    <div class="panalDetailUserP">
+        <div id="panelDetail">
+            <div id="panelDetailEnabled">
+                <div class="panelDetailUser">
+                    <div class="panelDetailUserP">
                         <div class="imagePerson">
                             <img id="imagePerson" src="/image/user_1144760.png" alt="">
                         </div>
                         <div class="nameUser">
-                            <div id="usernameFrind">username</div>
+                            <div id="usernameFriend">username</div>
                             <div style="font-size: 16px;width: auto; display: none;color: gray;" id="blockDetail"></div>
                         </div>
                     </div>
-                    <div class="panalDetailUserB" id="panalDetailUserBDiv">
-                        <button id="panalDetailUserB" onclick="blockFriend()">Block</button>
-                        <button id="panalDetailUserUB" onclick="unblockFriend()">Unblock</button>
+                    <div class="panelDetailUserB" id="panelDetailUserBDiv">
+                        <button id="panelDetailUserB" onclick="homeClickBlockFriend()">Block</button>
+                        <button id="panelDetailUserUB" onclick="homeClickUnblockFriend()">Unblock</button>
                     </div>
                 </div>
-                <div id="panalDetailChat">
+                <div id="panelDetailChat">
                 </div>
-                <div class="panalDetailMessage">
+                <div class="panelDetailMessage">
                     <!-- <input type="text"> -->
-                    <textarea name="" id="myTextarea"></textarea>
-                    <button id="buttonSendMessage" onclick="sendMessage()"><img src="/image/paper-plane.png" alt=""></button>
+                    <textarea name="" id="myTextarea" oninput="checkInputMessage()"></textarea>
+                    <button id="buttonSendMessage" onclick="homeClickSendMessage()" disabled><img src="/image/paper-plane.png"
+                            alt=""></button>
                 </div>
             </div>
         </div>
@@ -98,81 +98,121 @@
     <script src="/javascript/topmenu.js"></script>
     <script src="/javascript/getUserSession.js"></script>
     <script src="/javascript/getData.js"></script>
-    <script src="/javascript/chat.js"></script>
     <script src="/javascript/globalFuntion.js"></script>
+    <script src="/javascript/chat.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script>
 
-        setUpDataInHomePage();
-
-        // function createSlotUsers(num) {
-        //     const friendSlots = document.getElementById("panalMenuList");
-        //     let list = ``;
-        //     for (let index = 0; index < num; index++) {
-        //         list += `
-        //             <div class="friendSlot">
-        //                 <div class="imagePerson">
-        //                     <img src="/image/user_1144760.png" alt="">
-        //                 </div>
-        //                 <div class="name">
-        //                     <p>Username ${index + 1}</p>
-        //                 </div>
-        //             </div>
-        //             `
-        //     }
-        //     friendSlots.innerHTML = list;
-        // }
-
-
-
-        // function creatMessage(num) {
-        //     const panalDetailChat = document.getElementById("panalDetailChat");
-        //     for (let index = 0; index < num; index++) {
-        //         const chatBox = document.createElement("div");
-        //         chatBox.classList.add("chatBox");
-        //         const chatBoxInsite = document.createElement("div")
-        //         chatBoxInsite.classList.add("chatBoxInsite");
-        //         const message = document.createElement("div")
-        //         message.classList.add("message");
-        //         panalDetailChat.appendChild(chatBox);
-        //         chatBox.appendChild(chatBoxInsite);
-        //         if (index % 2 === 0) {
-        //             const imagePerson = document.createElement("div")
-        //             imagePerson.classList.add("imagePerson");
-        //             imagePerson.innerHTML = `<img src="/image/user_1144760.png" alt="">`;
-        //             chatBoxInsite.appendChild(imagePerson);
-        //             chatBox.style.justifyContent = "start";
-
-        //         } else {
-        //             chatBox.style.justifyContent = "end";
-        //         }
-        //         chatBoxInsite.appendChild(message);
-        //         message.innerText = "Compared to display: block, the major difference is that display: inline-block does not                        add"
-
-
-        //     }
-        // }
-
+        let socket;
         function logOutButton() {
             sessionStorage.clear()
             location.href = "/login";
         }
-        // createSlotUsers(25);
-        // creatMessage(15);
 
-        let login = sessionStorage.getItem("login");
-        let googleLogin = sessionStorage.getItem("googleLogin");
-        let userId = sessionStorage.getItem("userId")
-        let username = sessionStorage.getItem("username")
-        let email = sessionStorage.getItem("email")
-        let image = sessionStorage.getItem("image")
-        console.log("login :", login);
-        console.log("googleLogin :", googleLogin);
-        console.log("userId :", userId);
-        console.log("username :", username);
-        console.log("email :", email);
-        console.log("image :", image);
 
-        searchRooms();
+        document.addEventListener("DOMContentLoaded", async function () {
+            setUpDataInHomePage();
+
+            // let login = sessionStorage.getItem("login");
+            // let googleLogin = sessionStorage.getItem("googleLogin");
+            let userId = sessionStorage.getItem("userId")
+            // let username = sessionStorage.getItem("username")
+            // let email = sessionStorage.getItem("email")
+            // let image = sessionStorage.getItem("image")
+            // console.log("login :", login);
+            // console.log("googleLogin :", googleLogin);
+            console.log("My userId :", userId);
+            // console.log("username :", username);
+            // console.log("email :", email);
+            // console.log("image :", image);
+            await searchRooms();
+
+            socket = io();
+
+            socket.on('connect', async () => {
+                const userId = sessionStorage.getItem('userId');
+                if (userId) {
+                    socket.emit('getUserIdConnect', userId);
+                }
+            });
+
+            socket.on('sendAllUserIdConnectToUsers', (allUserIdWhoConnect) => {
+                //console.log("allUserIdWhoConnect:",allUserIdWhoConnect);
+                const listChatRooms = getAllListChatRoomUserHave();
+                for (let index = 0; index < allUserIdWhoConnect.length; index++) {
+                    const userIndex = listChatRooms.findIndex(friend => friend.id_user === parseInt(allUserIdWhoConnect[index].userIdConnect));
+                    if (userIndex !== -1) {
+                        const htmlElementShowActive = document.getElementById(`idFriend${allUserIdWhoConnect[index].userIdConnect}`);
+                        if (htmlElementShowActive) {
+                            htmlElementShowActive.style.backgroundColor = "green";
+                        } else {
+                            console.error("Element not found");
+                        }
+                    }
+                }
+                //console.log("userIdWhoConnect:",userIdWhoConnect);
+            });
+
+            socket.on('sendUserIdDisconnectToUsers', (userIdWhoConnect) => {
+                const listChatRooms = getAllListChatRoomUserHave();
+
+                const userIndex = listChatRooms.findIndex(friend => friend.id_user === parseInt(userIdWhoConnect));
+                if (userIndex !== -1) {
+                    const htmlElementShowActive = document.getElementById(`idFriend${userIdWhoConnect}`);
+                    if (htmlElementShowActive) {
+                        htmlElementShowActive.style.backgroundColor = "rgb(109, 109, 109)";
+                    } else {
+                        error("Element not found");
+                    }
+                }
+            });
+
+            socket.on('sendUserDataWhoHashBlockToUsers', (userIdWhoHashBlock) => {
+                //console.log("userIdWhoHashBlock:", userIdWhoHashBlock);
+                if (getCurrentSelectFriendId() === userIdWhoHashBlock.userIdWhoBlock && getCurrentIdUser() === userIdWhoHashBlock.userIdWhoHashBlock) {
+                    hidBlockBottom();
+                }
+            });
+
+            socket.on('sendUserDataWhoHashUnblockToUsers', (userIdWhoHashUnblock) => {
+                //console.log("userIdWhoHashUnblock:", userIdWhoHashUnblock);
+                if (getCurrentSelectFriendId() === userIdWhoHashUnblock.userIdWhoUnblock && getCurrentIdUser() === userIdWhoHashUnblock.userIdWhoHashUnblock) {
+                    showBlockBottom();
+                }
+            });
+
+            socket.on('sendNewDataMessageToUsers', (newMessage) => {
+                //console.log("newMessage",newMessage);
+                if (newMessage.userIdWhoSendMessage === getCurrentSelectFriendId() && newMessage.userIdWhoGetMessage === getCurrentIdUser()) {
+                    addNewMessage(newMessage.userIdWhoSendMessage, newMessage.message);
+                }
+
+            })
+        });
+
+        async function homeClickBlockFriend() {
+            const userWhoHasBlock = await blockFriend();
+            //console.log("userWhoHasBlock:", userWhoHasBlock);
+            if (userWhoHasBlock != null) {
+                socket.emit('blockThisUser', userWhoHasBlock);
+            }
+        }
+
+        async function homeClickUnblockFriend() {
+            const userWhoHasUnblock = await unblockFriend();
+            if (userWhoHasUnblock != null) {
+                socket.emit('unblockThisUser', userWhoHasUnblock);
+            }
+        }
+
+        async function homeClickSendMessage() {
+            const dataMessage = await sendMessage();
+            if (dataMessage != null) {
+                socket.emit('sendMessage', dataMessage);
+            }
+        }
+
+
     </script>
 </body>
 

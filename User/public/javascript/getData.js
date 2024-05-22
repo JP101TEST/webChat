@@ -24,8 +24,8 @@ async function searchFriend() {
 
 async function getRooms() {
     const inputUsername = document.getElementById('inputUsername');
-    const panalMenuList = document.getElementById("panalMenuList");
-    panalMenuList.innerHTML = ``;
+    const panelMenuList = document.getElementById("panelMenuList");
+    panelMenuList.innerHTML = ``;
     const userId = sessionStorage.getItem("userId");
     //console.log("inputUsername :", inputUsername.value);
     try {

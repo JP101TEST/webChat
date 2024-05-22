@@ -10,11 +10,11 @@ router.use((req, res, next) => {
 });
 
 router.post('/blockFriend', async (req, res) => {
-    console.log(req.body);
-    const { idFrind, idUserFriend } = req.body;
+    //console.log(req.body);
+    const { idFriend, idUserFriend } = req.body;
     try {
         const sql = 'UPDATE `friends` SET `id_user` = ?, `status` = ? WHERE `id_friend` = ?';
-        const value = [idUserFriend, 2, idFrind];
+        const value = [idUserFriend, 2, idFriend];
         await db.execute(sql, value);
         res.status(200).json({ message: 'Block friend successfully' });
     } catch (error) {
@@ -24,7 +24,7 @@ router.post('/blockFriend', async (req, res) => {
 });
 
 router.post('/unblockFriend', async (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     const { idFriend } = req.body;
     try {
         const sql = 'UPDATE `friends` SET `id_user` = ?, `status` = ? WHERE `id_friend` = ?';
@@ -38,7 +38,7 @@ router.post('/unblockFriend', async (req, res) => {
 });
 
 router.post('/sendMessage', async (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     const { idRoom, idSendUser, message } = req.body;
     try {
         const sql = 'INSERT INTO `messages`(`id_room`, `id_user`, `message`) VALUES (?,?,?)';

@@ -1,4 +1,4 @@
-#panal {
+#panel {
     /* background-color: #EEF7FF; */
     border-radius: 5px;
     height: 90%;
@@ -9,7 +9,7 @@
     font-family: "Roboto", sans-serif;
 }
 
-#panalMenu {
+#panelMenu {
     height: 99%;
     width: 20%;
     /* border-style: solid; */
@@ -19,7 +19,7 @@
     /* overflow-y: scroll; */
     min-width: 220px;
 
-    #panalMenuSearch {
+    #panelMenuSearch {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -51,7 +51,7 @@
         }
     }
 
-    #panalMenuFriend {
+    #panelMenuFriend {
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -71,25 +71,25 @@
             margin-right: 20px;
         }
 
-        #panalMenuFriendChat {
+        #panelMenuFriendChat {
             /* filter: brightness(0) invert(1); */
             color: white;
         }
 
-        #panalMenuFriendAddFriend {
+        #panelMenuFriendAddFriend {
             /* filter: brightness(0) invert(0.5);
             color: rgb(127, 127, 127); */
             /* filter: brightness(0) invert(0.5); */
             color: rgb(127, 127, 127);
         }
 
-        #panalMenuFriendAddFriend:hover {
+        #panelMenuFriendAddFriend:hover {
             /* filter: brightness(0) invert(1); */
             color: white;
         }
     }
 
-    #panalMenuList {
+    #panelMenuList {
         margin-top: 10px;
         width: 100%;
         height: 74%;
@@ -98,15 +98,15 @@
         border-radius: 15px;
     }
 
-    #panalMenuList::-webkit-scrollbar {
+    #panelMenuList::-webkit-scrollbar {
         width: 10px;
     }
 
-    #panalMenuList::-webkit-scrollbar-track {
+    #panelMenuList::-webkit-scrollbar-track {
         background-color: #393E46;
     }
 
-    #panalMenuList::-webkit-scrollbar-thumb {
+    #panelMenuList::-webkit-scrollbar-thumb {
         background-color: rgb(124, 132, 144);
         border-radius: 5px;
     }
@@ -114,15 +114,15 @@
 
 
 
-#panalDetail {
+#panelDetail {
     width: 80%;
     height: 90%;
     background-color: white;
     border-radius: 10px;
-    min-width: 400px;
+    min-width: 670px;
     padding: 10px 5px;
 
-    #panalDetailEnabale {
+    #panelDetailEnabled {
         height: 100%;
         width: 100%;
         border-radius: 10px;
@@ -132,11 +132,12 @@
         justify-content: space-around;
     }
 
-    .panalDetailUser {
+    .panelDetailUser {
         height: 10%;
         display: flex;
         justify-content: space-between;
-        .panalDetailUserP {
+
+        .panelDetailUserP {
             display: flex;
 
             .imagePerson {
@@ -159,12 +160,13 @@
             }
         }
 
-        .panalDetailUserB{
+        .panelDetailUserB {
             /* background-color: #5b7bae; */
             height: 100%;
             display: flex;
             align-items: center;
-            #panalDetailUserB{
+
+            #panelDetailUserB {
                 display: flex;
                 justify-content: center;
                 width: 100px;
@@ -174,12 +176,13 @@
                 color: white;
                 padding: 5px 15px 5px 15px;
             }
-            #panalDetailUserB:hover{
+
+            #panelDetailUserB:hover {
                 background-color: rgb(223, 141, 157);
                 cursor: pointer;
             }
 
-            #panalDetailUserUB{
+            #panelDetailUserUB {
                 display: none;
                 justify-content: center;
                 width: 100px;
@@ -189,14 +192,15 @@
                 color: white;
                 padding: 5px 15px 5px 15px;
             }
-            #panalDetailUserUB:hover{
+
+            #panelDetailUserUB:hover {
                 background-color: rgb(138, 174, 110);
                 cursor: pointer;
             }
         }
     }
 
-    #panalDetailChat {
+    #panelDetailChat {
         margin-top: 5px;
         background-color: #222831;
         height: 85%;
@@ -205,20 +209,20 @@
 
     }
 
-    #panalDetailChat::-webkit-scrollbar {
+    #panelDetailChat::-webkit-scrollbar {
         width: 10px;
     }
 
-    #panalDetailChat::-webkit-scrollbar-track {
+    #panelDetailChat::-webkit-scrollbar-track {
         background-color: #393E46;
     }
 
-    #panalDetailChat::-webkit-scrollbar-thumb {
+    #panelDetailChat::-webkit-scrollbar-thumb {
         background-color: rgb(124, 132, 144);
         border-radius: 5px;
     }
 
-    .panalDetailMessage {
+    .panelDetailMessage {
         background-color: #393E46;
         height: 20%;
         border-radius: 0px 0px 10px 10px;
@@ -250,7 +254,7 @@
             width: 0;
         }
 
-        button {
+        #buttonSendMessage {
             margin-left: 5px;
             height: 35px;
             width: 100px;
@@ -267,6 +271,17 @@
 
         }
 
+
+        #buttonSendMessage:hover {
+            cursor: pointer;
+        }
+
+        #buttonSendMessage:disabled {
+            background-color: #82868d;
+            cursor: default;
+
+        }
+
     }
 
 }
@@ -280,18 +295,32 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
+    position: relative;
 
     .imagePerson {
+
         height: 64px;
+        width: 64px;
         background-color: white;
         border-radius: 100%;
 
         img {
             height: 64px;
-            width:64px;
+            width: 64px;
             border-radius: 100%;
         }
 
+    }
+
+    .activeUser {
+        display: block;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        height: 20px;
+        width: 20px;
+        border-radius: 100%;
+        background-color: rgb(109, 109, 109);
     }
 
     .name {
@@ -338,7 +367,7 @@
     display: flex;
     /* justify-content: end; */
 
-    .chatBoxInsite {
+    .chatBoxInSite {
         max-width: 75%;
         display: flex;
 
@@ -369,9 +398,4 @@
         }
     }
 
-}
-
-
-#buttonSendMessage:hover{
-    cursor: pointer;
 }

@@ -43,7 +43,7 @@ router.post('/searchFriends', async (req, res) => {
 });
 
 router.post('/searchRooms', async (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     const { username, userId } = req.body;
     try {
         // const [rows, fields] = await db.query('SELECT * FROM (SELECT u.id_user AS id_user , u.username AS username , u.image AS image FROM users AS u WHERE u.id_user NOT IN (SELECT uf.id_user FROM user_friend AS uf WHERE uf.id_friend IN ( SELECT id_friend FROM user_friend WHERE id_user = ? ) AND uf.id_user != ?)AND u.id_user != ?) AS u WHERE username LIKE ? ORDER BY username;', [userId, userId, userId, '%' + username + '%']);
