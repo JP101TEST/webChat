@@ -3,7 +3,8 @@ Web chat create by node.js express.js
 
 # Features
 - Add friend
-- Chat friend (not realtime)
+- Chat friend (realtime)
+- Block and unBlock (realtime)
 - Change image profile
 
 # How to run
@@ -23,7 +24,7 @@ Web chat create by node.js express.js
    - Import database use database.sql
 - Run 
 	- Open terminal in folder Api and use `npm start`
-	- Do it agine in folder User
-	- When complete is show linek 
+	- Do it again in folder User
+	- When computer is show link
 	"Server started at port 8080. Run in http://localhost:8080/"
-	can clike for open webChat
+	can click for open webChat
