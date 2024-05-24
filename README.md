@@ -6,6 +6,8 @@ Web chat create by node.js express.js
 - Chat friend (realtime)
 - Block and unBlock (realtime)
 - Change image profile
+- Register
+- Login by google account
 
 # How to run
 - Install node js
