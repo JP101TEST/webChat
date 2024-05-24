@@ -181,7 +181,7 @@ async function unblockFriend() {
 }
 
 function displayUnblockFriend() {
-    setDisable(buttonSendMessage, false);
+    setDisable(buttonSendMessage, true);
     setDisable(myTextarea, false);
     setDisplay(panelDetailUserB, "flex");
     setDisplay(panelDetailUserUB, "none");

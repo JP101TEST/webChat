@@ -203,17 +203,25 @@
         let result = true; // Assume the input is invalid initially
         // Check if any input field is empty
         if (data.username === '') {
-
             usernameError.style.display = "block";
             usernameError.innerText = "Username is empty";
-
             result = false; // Set result to false if username is empty
-
         } else {
-            console.log("data.username Pattern");
+            //console.log("data.username Pattern");
             const checkPattern = checkInputUsernamePatternRegister(data.username);
+            const checkHaveChar = checkCharacters(data.username);
+            if (data.username.length < 6) {
+                usernameError.innerText = "Username min of size 6.";
+                usernameError.style.display = "block";
+                result = false; // Set result to false if username doesn't match the pattern
+            }
+            if (!checkHaveChar) {
+                usernameError.innerText = "Username can't have only number.";
+                usernameError.style.display = "block";
+                result = false; // Set result to false if username doesn't match the pattern
+            }
             if (!checkPattern) {
-                usernameError.innerText = "Use a-zA-Z0-9 and _ only.";
+                usernameError.innerText = "Username use a-zA-Z0-9 and _ only.";
                 usernameError.style.display = "block";
                 result = false; // Set result to false if username doesn't match the pattern
             }
@@ -223,12 +231,27 @@
             passwordError.innerText = "Password is empty";
             passwordError.style.display = "block";
             result = false; // Set result to false if password is empty
+        } else {
+            if (data.password === data.username) {
+                passwordError.innerText = "Password can't same a username";
+                passwordError.style.display = "block";
+                result = false;
+            }
         }
+
+
 
         if (data.email === '') {
             emailError.innerText = "Email is empty";
             emailError.style.display = "block";
             result = false; // Set result to false if email is empty
+        } else {
+            const checkEmailPattern = checkEmail(data.email);
+            if (!checkEmailPattern) {
+                emailError.innerText = "Email pattern is not correct";
+                emailError.style.display = "block";
+                result = false;
+            }
         }
 
         return result; // Return the final result indicating input validity
@@ -242,6 +265,22 @@
         const result = pattern.test(username);
 
         return result;
+    }
+
+    function checkCharacters(username) {
+        // Regular expression to match any character that is not a digit
+        const nonNumericRegex = /\D/;
+
+        // Test if the username contains any non-numeric character
+        return nonNumericRegex.test(username);
+    }
+
+    function checkEmail(email) {
+        // Regular expression to match a valid email address
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Test if the email matches the regular expression
+        return emailRegex.test(email);
     }
 
     function registerErrorDisplay(result) {
